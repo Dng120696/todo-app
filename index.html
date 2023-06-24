@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Frontend Mentor | Todo app</title>
+</head>
+<body>
+  <main class="container">
+    <header class="flex">
+      <h1 class="title">
+        Todo
+      </h1>
+     <div class="mode-menu">
+      <img src="./images/icon-sun.svg" alt="" class="light-mode hidden">
+      <img src="./images/icon-moon.svg" alt="" class="dark-mode ">
+     </div> 
+    </header>
+    <!-- INPUT BOX -->
+    <div class="input-box">
+      <form id="form">
+        <input type="text" name="text" id="input-text" 
+        placeholder="Create a new todo...">
+      </form>
+        <div class="radio-circle">
+          <!-- <div class="input-circle">
+          </div>
+          <input type="checkbox" name="checkbox" class="input-check"> -->
+        </div>
+    </div>
+    <!-- TODO LIST SECTION-->
+    <section class="todo-list-sec">
+      <div class="todo-box">
+      </div>
+      <div class="flex footer-todo-list">
+        <p><span class="todo-count">0</span> items left</p>
+        <p class="clear-all">
+          Clear Completed
+        </p>
+      </div>
+    </section>
+    <div class="link-item flex">
+      <p class="link select-all active">
+        All
+      </p>
+      <p class="link select-active">
+        Active 
+      </p>
+      <p class="link select-completed">
+        Completed
+      </p>
+    </div>
+      <p>
+        Drag and drop to reorder list
+      </p>
+  </main>
+  <script src="./script.js"></script>
+</body>
+</html>
