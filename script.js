@@ -44,11 +44,12 @@ const renderTodo = (selected) => {
   selected.forEach((todo, index) => {
     const { text, completed } = todo;
     const checkedClass = completed ? "active-circle" : "";
+    const styletxt = completed ? "active-txt" : "";
 
     const html = `<div class="box flex" data-box=${index}>
       <div class="box-info flex">
           <div class="circle ${checkedClass}" data-circle=${index}></div>
-          <p class="todo-txt" data-index=${index}>${text}</p>
+          <p class="todo-txt ${styletxt}" data-index=${index}>${text}</p>
       </div>
       <img src="./images/icon-cross.svg" alt="" class="delete-todo" data-del=${index}>
     </div>`;
@@ -84,8 +85,7 @@ selecActive.addEventListener('click',function(){
 })
 
 selectCompleted.addEventListener('click', function(){
-  const completedCircles = document.querySelectorAll(".circle.active-circle");
-  const completedTodos = Array.from(completedCircles).map(circle => todos[Number(circle.dataset.circle)]);
+  const completedTodos = todos.filter(todo => todo.completed);
   init(completedTodos)
 })
 
@@ -104,7 +104,12 @@ todoBox.addEventListener('click',function(e){
     const {circle} = el.dataset;
     todos[circle].completed = !todos[circle].completed;
     el.classList.toggle('active-circle')
-
+    const todotxt = document.querySelector(`.todo-txt[data-index='${circle}']`);
+    if(el.classList.contains('active-circle')){
+        todotxt.classList.add('active-txt')
+    }else{
+      todotxt.classList.remove('active-txt')
+    }
   }
 })
 

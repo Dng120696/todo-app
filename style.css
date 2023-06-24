@@ -168,6 +168,10 @@ input::placeholder {
 .todo-list-sec {
   border-radius: 8px;
 }
+.active-txt{
+  text-decoration: line-through;
+  color: var(--clr-completed);
+}
 input,
 .footer-todo-list,
 .link-item {
