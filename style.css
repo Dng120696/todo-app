@@ -130,12 +130,15 @@ header {
 }
 input[type="text"] {
   width: 100%;
-  padding: 2rem 2rem 2rem 6rem;
+  padding: 2rem 2rem 2rem 6.5rem;
   border: none;
   color: var(--clr-todo-txt);
 }
 input::placeholder {
   color: var(--clr-footer-todo);
+}
+.radio-circle{
+  left: 4rem;
 }
 .todo-box{
   background-color: var(--bg-box);
@@ -151,13 +154,16 @@ input::placeholder {
 .box-info {
   gap: 1.5rem;
 }
-.circle {
+.radio-circle,
+.circle{
   width: 2.2rem;
   height: 2.2rem;
   background: var(--bg-box );
   border: 1px solid var(--clr-txt);
   border-radius: 50%;
 }
+
+
 .active-circle{
   background:url(./images/icon-check.svg) no-repeat center,linear-gradient(
                 130deg,
