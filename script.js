@@ -19,23 +19,22 @@ const todoBox = document.querySelector(".todo-box");
 const todoCount = document.querySelector(".todo-count");
 const linkItem = document.querySelector(".link-item");
 const link = document.querySelectorAll(".link");
-const selecAll = document.querySelector('.select-all')
-const selecActive = document.querySelector('.select-active')
-const selectCompleted = document.querySelector('.select-completed')
+const selecAll = document.querySelector(".select-all");
+const selecActive = document.querySelector(".select-active");
+const selectCompleted = document.querySelector(".select-completed");
 const clearAll = document.querySelector(".clear-all");
+const footer = document.querySelector("footer");
 
 let todos = [];
 let itemcount = 0;
 
-
-
-const UpdateCount = (el) =>{
+const UpdateCount = (el) => {
   itemcount = el.length;
   todoCount.textContent = itemcount;
-}
-const  init = (el)=>{
-  renderTodo(el)
-  UpdateCount(el)
+};
+const init = (el) => {
+  renderTodo(el);
+  UpdateCount(el);
 };
 
 const renderTodo = (selected) => {
@@ -58,61 +57,60 @@ const renderTodo = (selected) => {
   });
 };
 
-
 //EVENT HANDLER SECTION
 // FORM SECTION
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const inputVal = inputText.value.trim();
   if (!inputVal) return;
-  todos.push({text:inputVal,completed:false});
+
+  todos.push({ text: inputVal, completed: false });
   renderTodo(todos);
   itemcount++;
   todoCount.textContent = itemcount;
+  footer.style.borderRadius = "0 0 8px 8px";
   inputText.value = "";
   inputText.blur();
-
 });
 
 // FILTERING ELEMENT
-selecAll.addEventListener('click',function(){
+selecAll.addEventListener("click", function () {
   init(todos);
-})
+});
 
-selecActive.addEventListener('click',function(){
-  const activeTodo =todos.filter(todo => !todo.completed);
-  init(activeTodo)
-})
+selecActive.addEventListener("click", function () {
+  const activeTodo = todos.filter((todo) => !todo.completed);
+  init(activeTodo);
+});
 
-selectCompleted.addEventListener('click', function(){
-  const completedTodos = todos.filter(todo => todo.completed);
-  init(completedTodos)
-})
+selectCompleted.addEventListener("click", function () {
+  const completedTodos = todos.filter((todo) => todo.completed);
+  init(completedTodos);
+});
 
 // Event Delagation
-todoBox.addEventListener('click',function(e){
+todoBox.addEventListener("click", function (e) {
   const el = e.target;
-  if(el.classList.contains('delete-todo')){
-    const {del} = el.dataset;
-    todos.splice(del,1)
+  if (el.classList.contains("delete-todo")) {
+    const { del } = el.dataset;
+    todos.splice(del, 1);
     itemcount--;
     todoCount.textContent = itemcount;
-    renderTodo(todos)
+    renderTodo(todos);
   }
 
-  if(el.classList.contains('circle')){
-    const {circle} = el.dataset;
+  if (el.classList.contains("circle")) {
+    const { circle } = el.dataset;
     todos[circle].completed = !todos[circle].completed;
-    el.classList.toggle('active-circle')
+    el.classList.toggle("active-circle");
     const todotxt = document.querySelector(`.todo-txt[data-index='${circle}']`);
-    if(el.classList.contains('active-circle')){
-        todotxt.classList.add('active-txt')
-    }else{
-      todotxt.classList.remove('active-txt')
+    if (el.classList.contains("active-circle")) {
+      todotxt.classList.add("active-txt");
+    } else {
+      todotxt.classList.remove("active-txt");
     }
   }
-})
-
+});
 
 // LINK ITEM
 linkItem.addEventListener("click", (e) => {
@@ -128,4 +126,3 @@ clearAll.addEventListener("click", () => {
   itemcount = 0;
   todoCount.textContent = itemcount;
 });
-
