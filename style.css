@@ -223,7 +223,7 @@ footer {
 .box:hover img {
   visibility: visible;
 }
-.clear-all:hover {
+.clear-completed:hover {
   color: var(--clr-todo-txt);
   cursor: pointer;
 }

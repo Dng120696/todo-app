@@ -22,7 +22,7 @@ const link = document.querySelectorAll(".link");
 const selecAll = document.querySelector(".select-all");
 const selecActive = document.querySelector(".select-active");
 const selectCompleted = document.querySelector(".select-completed");
-const clearAll = document.querySelector(".clear-all");
+const clearCompleted = document.querySelector(".clear-completed");
 const footer = document.querySelector("footer");
 
 let todos = [];
@@ -120,9 +120,14 @@ linkItem.addEventListener("click", (e) => {
 });
 
 // clear all array and inner html
-clearAll.addEventListener("click", () => {
-  todos = [];
-  todoBox.innerHTML = "";
-  itemcount = 0;
-  todoCount.textContent = itemcount;
+clearCompleted.addEventListener("click", () => {
+  const completedtodos = todos.filter(todo => todo.completed);
+  console.log(completedtodos);
+  completedtodos.forEach(complete => {
+    const index = todos.indexOf(complete)
+    todos.splice(index,1)
+  })
+  renderTodo(todos)
 });
+
+
