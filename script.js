@@ -128,6 +128,8 @@ clearCompleted.addEventListener("click", () => {
     todos.splice(index,1)
   })
   renderTodo(todos)
+  itemcount = todos.length;
+  todoCount.textContent = itemcount;
 });
 
 
