@@ -64,25 +64,25 @@ body::after {
 body::before {
   top: 0;
   left: 0;
-  height: 30vh;
+  min-height: 30%;
   background: url(./images/bg-desktop-light.jpg) no-repeat center / cover;
 }
 .dark-mode::before {
   top: 0;
   left: 0;
-  height: 30vh;
+  min-height: 30%;
   background: url(./images/bg-desktop-dark.jpg) no-repeat center / cover;
 }
 body::after {
   bottom: 0;
   left: 0;
-  height: 70vh;
+  min-height: 70%;
   background-color: var(--bg-todo-box);
 }
 .dark-mode::after {
   bottom: 0;
   left: 0;
-  height: 70vh;
+  min-height: 70%;
   background-color: var(--clr-radio-border);
 }
 p {

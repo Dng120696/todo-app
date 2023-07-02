@@ -30,7 +30,7 @@ const Task = class {
     this.description = description;
     this.isCompleted = false;
   }
- 
+
 
 };
 
@@ -99,7 +99,6 @@ form.addEventListener("submit", (e) => {
   todolist.increment();
   footer.style.borderRadius = "0 0 8px 8px";
   inputText.value = "";
-  inputText.blur();
 });
 
 // // FILTERING ELEMENT
