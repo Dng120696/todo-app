@@ -30,9 +30,7 @@ const Task = class {
     this.description = description;
     this.isCompleted = false;
   }
-  toggleCompleted() {
-    this.isCompleted = !this.isCompleted;
-  }
+ 
 
 };
 
@@ -60,13 +58,16 @@ const TodoList = class {
     this.itemcount = todo.length;
     todoCount.textContent = this.itemcount;
   }
+  toggleCompleted(index) {
+    this.todos[index].isCompleted = !this.todos[index].isCompleted;
+  }
   init(todo){
     todolist.renderTodo(todo);
     todolist.updateTodoCount(todo)
   }
   renderTodo(todolist) {
     todoBox.innerHTML = "";
-
+    console.log(todolist);
     todolist.forEach((todo, index) => {
       const { description, isCompleted } = todo;
       const checkedClass = isCompleted ? "active-circle" : "";
@@ -93,7 +94,6 @@ form.addEventListener("submit", (e) => {
   const inputVal = inputText.value.trim();
   if (!inputVal) return;
   const newTask = new Task(inputVal);
-  console.log(newTask);
   todolist.addTodo(newTask);
   todolist.renderTodo(todoArr)
   todolist.increment();
@@ -129,7 +129,7 @@ todoBox.addEventListener("click", function (e) {
 
   if (el.classList.contains("circle")) {
     const { circle } = el.dataset;
-    todoArr[circle].isCompleted = !todoArr[circle].isCompleted;
+    todolist.toggleCompleted(circle);
     el.classList.toggle("active-circle");
     const todotxt = document.querySelector(`.todo-txt[data-index='${circle}']`);
     if (el.classList.contains("active-circle")) {
