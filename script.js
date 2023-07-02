@@ -25,83 +25,111 @@ const selectCompleted = document.querySelector(".select-completed");
 const clearCompleted = document.querySelector(".clear-completed");
 const footer = document.querySelector("footer");
 
-let todos = [];
-let itemcount = 0;
+const Task = class {
+  constructor(description) {
+    this.description = description;
+    this.isCompleted = false;
+  }
+  toggleCompleted() {
+    this.isCompleted = !this.isCompleted;
+  }
 
-const UpdateCount = (el) => {
-  itemcount = el.length;
-  todoCount.textContent = itemcount;
 };
-const init = (el) => {
-  renderTodo(el);
-  UpdateCount(el);
-};
 
-const renderTodo = (selected) => {
-  todoBox.innerHTML = "";
+const TodoList = class {
+  constructor() {
+    this.todos = [];
+    this.itemcount = 0;
 
-  selected.forEach((todo, index) => {
-    const { text, completed } = todo;
-    const checkedClass = completed ? "active-circle" : "";
-    const styletxt = completed ? "active-txt" : "";
+  }
+  addTodo(todo) {
+    this.todos.push(todo);
+  }
+  removeTodo(index) {
+    this.todos.splice(index, 1);
+  }
+  increment() {
+    this.itemcount++;
+    todoCount.textContent = this.itemcount;
+  }
+  decrement() {
+    this.itemcount--;
+    todoCount.textContent = this.itemcount;
+  }
+  updateTodoCount(todo) {
+    this.itemcount = todo.length;
+    todoCount.textContent = this.itemcount;
+  }
+  init(todo){
+    todolist.renderTodo(todo);
+    todolist.updateTodoCount(todo)
+  }
+  renderTodo(todolist) {
+    todoBox.innerHTML = "";
 
-    const html = `<div class="box flex" data-box=${index}>
+    todolist.forEach((todo, index) => {
+      const { description, isCompleted } = todo;
+      const checkedClass = isCompleted ? "active-circle" : "";
+      const styletxt = isCompleted ? "active-txt" : "";
+
+      const html = `<div class="box flex" data-box=${index}>
       <div class="box-info flex">
           <div class="circle ${checkedClass}" data-circle=${index}></div>
-          <p class="todo-txt ${styletxt}" data-index=${index}>${text}</p>
+          <p class="todo-txt ${styletxt}" data-index=${index}>${description}</p>
       </div>
       <img src="./images/icon-cross.svg" alt="" class="delete-todo" data-del=${index}>
     </div>`;
 
-    todoBox.insertAdjacentHTML("afterbegin", html);
-  });
+      todoBox.insertAdjacentHTML("afterbegin", html);
+    });
+  }
 };
 
-//EVENT HANDLER SECTION
+const todolist = new TodoList();
+const todoArr = todolist.todos;
 // FORM SECTION
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const inputVal = inputText.value.trim();
   if (!inputVal) return;
-
-  todos.push({ text: inputVal, completed: false });
-  renderTodo(todos);
-  itemcount++;
-  todoCount.textContent = itemcount;
+  const newTask = new Task(inputVal);
+  console.log(newTask);
+  todolist.addTodo(newTask);
+  todolist.renderTodo(todoArr)
+  todolist.increment();
   footer.style.borderRadius = "0 0 8px 8px";
   inputText.value = "";
   inputText.blur();
 });
 
-// FILTERING ELEMENT
+// // FILTERING ELEMENT
 selecAll.addEventListener("click", function () {
-  init(todos);
+  todolist.renderTodo(todoArr);
 });
 
 selecActive.addEventListener("click", function () {
-  const activeTodo = todos.filter((todo) => !todo.completed);
-  init(activeTodo);
+  const activeTodo = todoArr.filter((todo) => !todo.isCompleted);
+  todolist.init(activeTodo);
 });
 
 selectCompleted.addEventListener("click", function () {
-  const completedTodos = todos.filter((todo) => todo.completed);
-  init(completedTodos);
+  const completedTodos = todoArr.filter((todo) => todo.isCompleted);
+  todolist.init(completedTodos);
 });
 
-// Event Delagation
+// selecting the todo box
 todoBox.addEventListener("click", function (e) {
   const el = e.target;
   if (el.classList.contains("delete-todo")) {
     const { del } = el.dataset;
-    todos.splice(del, 1);
-    itemcount--;
-    todoCount.textContent = itemcount;
-    renderTodo(todos);
+    todolist.removeTodo(del);
+    todolist.decrement();
+    todolist.renderTodo(todoArr);
   }
 
   if (el.classList.contains("circle")) {
     const { circle } = el.dataset;
-    todos[circle].completed = !todos[circle].completed;
+    todoArr[circle].isCompleted = !todoArr[circle].isCompleted;
     el.classList.toggle("active-circle");
     const todotxt = document.querySelector(`.todo-txt[data-index='${circle}']`);
     if (el.classList.contains("active-circle")) {
@@ -111,6 +139,15 @@ todoBox.addEventListener("click", function (e) {
     }
   }
 });
+// clear all todolist
+clearCompleted.addEventListener("click", () => {
+  const completedtodos = todoArr.filter(todo => todo.isCompleted);
+  completedtodos.forEach(complete => {
+    const index = todoArr.indexOf(complete)
+    todolist.removeTodo(index)
+  })
+  todolist.init(todoArr);
+});
 
 // LINK ITEM
 linkItem.addEventListener("click", (e) => {
@@ -119,17 +156,7 @@ linkItem.addEventListener("click", (e) => {
   el?.classList.add("active");
 });
 
-// clear all array and inner html
-clearCompleted.addEventListener("click", () => {
-  const completedtodos = todos.filter(todo => todo.completed);
-  console.log(completedtodos);
-  completedtodos.forEach(complete => {
-    const index = todos.indexOf(complete)
-    todos.splice(index,1)
-  })
-  renderTodo(todos)
-  itemcount = todos.length;
-  todoCount.textContent = itemcount;
-});
+
+
 
 
