@@ -103,7 +103,7 @@ form.addEventListener("submit", (e) => {
 
 // // FILTERING ELEMENT
 selecAll.addEventListener("click", function () {
-  todolist.renderTodo(todoArr);
+  todolist.init(todoArr);
 });
 
 selecActive.addEventListener("click", function () {
